@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ece-intweub-mbapps-mac-pg.postgres.database.azure.com:5432/maa?currentSchema=application
+    # db-instance specific
+    username: maa@ece-intweub-mbapps-mac-pg
+    password: maa@mbapp
+    hikari:      connection-timeout: 40000
+      minimum-idle: 5
+      maximum-pool-size: 8
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      auto-commit: false
+server:  port: 9090
