@@ -29,7 +29,7 @@ export default function LocalSearch() {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey.A700,
+      backgroundColor: theme.palette.primary.main,
       color: theme.palette.common.white,
       fontSize: "140%"
     },

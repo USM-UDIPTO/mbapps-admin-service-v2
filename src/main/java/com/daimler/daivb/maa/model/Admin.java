@@ -14,7 +14,7 @@ import lombok.Data;
 @Entity
 @Table(name = "admin_v2")
 @Data
-public class Admin implements Serializable{
+public class Admin implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,29 +22,14 @@ public class Admin implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	
+
 	@Column(name = "user_name")
 	private String userName;
-	
-	@Column(name = "password")
-	private String password;
-	
-	@Column(name = "full_name")
-	private String fullName;
 
-	@Column(name = "email")
-	private String email;
-	
-	@Column(name = "role_name")
-	private String roleName;
+	public Admin() {
+	}
 
-	public Admin() {}
-
-	public Admin(String userName, String password, String fullName, String email, String roleName) {
+	public Admin(String userName) {
 		this.userName = userName;
-		this.password = password;
-		this.fullName = fullName;
-		this.email = email;
-		this.roleName = roleName;
 	}
 }

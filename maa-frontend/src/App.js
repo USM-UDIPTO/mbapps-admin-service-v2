@@ -4,6 +4,7 @@ import SideBar from "./components/SideBar";
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import LocalSearch from "./components/LocalSearch";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/localSearch" element={<LocalSearch />} />
+        <Route path="/admin"  element = {<Admin/>} />
       </Routes>
     </div>
   );

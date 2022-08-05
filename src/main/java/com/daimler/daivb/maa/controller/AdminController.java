@@ -11,7 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,24 +41,47 @@ public class AdminController {
 	@Autowired
 	private FeignMALUtil feignMALUtil;
 
-	@PostMapping("/admins")
+	@PostMapping("/admin")
 	public ResponseEntity<AdminDTO> createAdmin(@RequestBody AdminDTO adminDTO) throws URISyntaxException {
 		log.debug("REST request to save Admin : {}", adminDTO);
 		adminDTO.setId(null);
 		if (adminService.adminUserNamecheck(adminDTO.getUserName())) {
 			throw new BadRequestException("User already exists!!");
 		}
-		AdminDTO result = adminService.save(adminDTO);
+		AdminDTO result = adminService.saveOrUpdate(adminDTO);
 		return ResponseEntity.created(new URI("/api/admins/" + result.getId())).body(result);
 	}
 
 	@GetMapping("/admins")
 	public ResponseEntity<List<AdminDTO>> getAllAdmins() throws URISyntaxException {
+		log.debug("REST request to get Admins");
 		List<AdminDTO> admins = adminService.getAllAdmins();
 		if (admins.isEmpty()) {
 			throw new RecordNotFoundException("No Admins data found!!");
 		}
 		return ResponseEntity.ok(admins);
+	}
+	
+	@GetMapping("/admin/{id}")
+	public ResponseEntity<AdminDTO> getAdmin(@PathVariable("id") Long id) throws URISyntaxException {
+		log.debug("REST request to get Admin with id : {} ", id);
+		return ResponseEntity.ok(adminService.getAdmin(id));
+	}
+
+	@PutMapping("/admin")
+	public ResponseEntity<AdminDTO> updateAdmin(@RequestBody AdminDTO adminDTO) {
+		log.debug("REST request to update Admin : {} ", adminDTO);
+		if (adminService.adminUserNamecheck(adminDTO.getUserName())) {
+			throw new BadRequestException("User already exists!!");
+		}
+		return ResponseEntity.ok(adminService.saveOrUpdate(adminDTO));
+	}
+
+	@DeleteMapping("/admin/{id}")
+	public ResponseEntity<HttpStatus> deleteAdmin(@PathVariable("id") Long id) throws URISyntaxException {
+		log.debug("REST request to delete Admin with id : {} ", id);
+		adminService.deleteAdmin(id);
+		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
 	@GetMapping("/mal")

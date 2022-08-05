@@ -12,6 +12,9 @@ export default function SideBar() {
     case "Local Search":
       navigate("/localSearch");
       break;
+    case "Create/Remove Admin":
+      navigate("/admin");
+      break;
     default:
       navigate("/");
     }

@@ -12,10 +12,14 @@ import com.daimler.daivb.maa.dto.AdminDTO;
  */
 public interface AdminService {
 
-	AdminDTO save(AdminDTO adminDTO);
+	AdminDTO saveOrUpdate(AdminDTO adminDTO);
 
 	boolean adminUserNamecheck(String userName);
 
 	List<AdminDTO> getAllAdmins();
+
+	AdminDTO getAdmin(Long id);
+
+	void deleteAdmin(Long id);
 
 }
