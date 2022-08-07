@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "admin_v2")
+@Table(name = "admin")
 @Data
 public class Admin implements Serializable {
 

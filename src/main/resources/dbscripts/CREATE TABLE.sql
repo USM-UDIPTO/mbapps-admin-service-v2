@@ -1,8 +1,5 @@
-CREATE table IF NOT EXISTS admin_v2 (
-	id serial4 not null primary key,
-	user_name varchar(255) DEFAULT null,
-	password varchar(100) NOT NULL,
-	full_name varchar(255) DEFAULT NULL,
-	email varchar(255) DEFAULT NULL,
-	role_name varchar(255) DEFAULT NULL
+CREATE TABLE IF NOT EXISTS admin (
+	id serial4 NOT null,
+	user_name varchar(50) NOT NULL,
+	CONSTRAINT admin_pk PRIMARY KEY (id)
 );
