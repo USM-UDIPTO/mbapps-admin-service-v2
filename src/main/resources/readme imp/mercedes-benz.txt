@@ -1,0 +1,73 @@
+kubectl config get-contexts 
+
+kubectl get pods -n mbapps-npr
+kubectl --kubeconfig=ece-npweushared01-k8s@mbapps-npr get pods -n mbapps-npr
+
+kubectl port-forward --kubeconfig=ece-npweushared01-k8s@mbapps-npr mbapps-local-search-service-9d56c879f-67wwn 8081:8080 -n mbapps-npr
+
+===============================================================
+
+set https.proxy=http://53.88.72.33:3128
+
+===============================================================
+
+fluentbit_CL
+| search "1145596916417580683"
+| extend service_name_ = tostring(parse_json(log_s).service_name)
+| extend message_ = tostring(parse_json(log_s).message)
+| extend level_ = tostring(parse_json(log_s).level)
+| extend traceId_ = tostring(parse_json(tostring(parse_json(log_s).mdc)).traceId)
+
+===============================================================
+
+-javaagent:C:\Udipto\IDE\sts-4.7.2.RELEASE\lombok.jar
+
+===============================================================
+
+Mbapps-core-service						MAC	Ashish / Shobika
+Mbapps-frontend-application				MAF	Ashish / Shobika
+Mbapps-ev-station-service				MAE	Harini
+Mbapps-local-search-service				MAL	Ashish
+Mbapps-weather-service					MAW	Shobika
+Mbapps-admin-service					MAA	Shobika
+Mbapps-sds-service						MAS	Shobika
+Mbapps-send-to-car-service				MA2	Ashish
+Mbapps-traffic-cams-service				MAV	Harini
+Mbapps-iheart-service					MAH	Harini
+Mbapps-ipradio-service					MAR	Harini
+Mbapps-promotion-service				MAO	Akanksha
+Mbapps-incarstore-service				MAI	Akanksha
+Mbapps-sendtocar-gateway-service		S2X	Ashish
+Mbapps-aqi-service						MAQ	Akanksha
+MBAPPS-RESTAURANT-SERVICE				MAU
+
+===============================================================
+
+C:\Udipto\projects\probing services\mtp-core\config\tcuConfig\virtualVIN>keytool
+Key and Certificate Management Tool
+
+Commands:
+
+ -certreq            Generates a certificate request
+ -changealias        Changes an entry's alias
+ -delete             Deletes an entry
+ -exportcert         Exports certificate
+ -genkeypair         Generates a key pair
+ -genseckey          Generates a secret key
+ -gencert            Generates certificate from a certificate request
+ -importcert         Imports a certificate or a certificate chain
+ -importpass         Imports a password
+ -importkeystore     Imports one or all entries from another keystore
+ -keypasswd          Changes the key password of an entry
+ -list               Lists entries in a keystore
+ -printcert          Prints the content of a certificate
+ -printcertreq       Prints the content of a certificate request
+ -printcrl           Prints the content of a CRL file
+ -storepasswd        Changes the store password of a keystore
+
+Use "keytool -command_name -help" for usage of command_name
+
+C:\Udipto\projects\probing services\mtp-core\config\tcuConfig\virtualVIN>keytool -v -list -keystore MTP2132871Z120001.jks
+Enter keystore password:
+
+================================================================

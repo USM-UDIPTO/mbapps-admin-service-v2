@@ -1,0 +1,18 @@
+npm install -g npm@latest
+
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/icons-material
+npm install react-router-dom
+npm install axios
+npm install @mui/x-data-grid
+npm install --save react-window
+
+==========================================================
+
+Steps for installing eslint:
+
+Install eslint : npm install -D eslint
+Install related plugins : npm install -D eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-react
+Auto create eslint config json: npm init @eslint/config
+Add support to run lint in package.json as npm command: "lint": "eslint \"src/**/*.{js,jsx}\"" under scripts
+Add this in rules section for .eslintrc.json: react/react-in-jsx-scope": "off"
