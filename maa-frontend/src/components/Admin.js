@@ -12,8 +12,11 @@ export default function Admin() {
   const [updateBtnActive, setUpdateBtnActive] = useState(true);
   const [createBtnActive, setCreateBtnActive] = useState(true);
   let selected_user = useRef({});
+  const [updateMsg, setUpdateMsg] = useState(false);
   const [deleteMsg, setDeleteMsg] = useState(false);
   const [createdMsg, setCreatedMsg] = useState(false);
+  const [duplicateUserMsg, setDuplicateUserMsg] = useState(false);
+  let duplicateUserErrMsg = useRef("");
   let new_user = useRef({ "userName": "" });
 
   useEffect(() => {
@@ -31,6 +34,7 @@ export default function Admin() {
   const handleChange = (event) => {
     setUser(event.target.value);
     selected_user.current = Object.assign({}, event.target.value);
+    duplicateUserErrMsg.current = event.target.value.userName;
     if (event.target.value === "") {
       setButtonActive(true);
     } else {
@@ -69,10 +73,23 @@ export default function Admin() {
       .then(res => {
         admin_data.current.filter(user => user.id === res.data.id).forEach(dt => { dt.userName = res.data.userName });
         setEditActive(editActive ? false : true);
+        toggleUpdateMsg();
       }).catch(err => {
         setLoading(true);
-        console.log(err);
+        console.error(err.response.data);
+        if (err.response.status === 400) {
+          duplicateUserErrMsg.current = err.response.data.message;
+          toggleDuplicateUserMsg();
+        }
       });
+  }
+
+  function toggleUpdateMsg() {
+    setUpdateMsg(updateMsg?false:true);
+  }
+
+  function toggleDuplicateUserMsg() {
+    setDuplicateUserMsg(duplicateUserMsg ? false : true)
   }
 
   function create() {
@@ -83,7 +100,11 @@ export default function Admin() {
         toggleCreatedMsg();
       }).catch(err => {
         setLoading(true);
-        console.log(err);
+        console.error(err.response.data);
+        if (err.response.status === 400) {
+          duplicateUserErrMsg.current = err.response.data.message;
+          toggleDuplicateUserMsg();
+        }
       });
   }
 
@@ -100,6 +121,7 @@ export default function Admin() {
         });
         toggleDeleteMsg();
         setButtonActive(true);
+        setUser("");
       }).catch(err => {
         setLoading(true);
         console.log(err);
@@ -133,6 +155,13 @@ export default function Admin() {
             ))}
           </Select>
         </FormControl>
+        <Snackbar
+          open={updateMsg}
+          autoHideDuration={4000}
+          onClose={toggleUpdateMsg}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          message={`User "${duplicateUserErrMsg.current}" is updated to "${selected_user.current.userName}" successfully`}
+        />
         <Dialog open={editActive} maxWidth={"sm"} sx={{ paddingRight: "4%" }} fullWidth={true} onClose={renderEditDialog}>
           <DialogTitle align="center">Edit user details</DialogTitle>
           <Box sx={{ width: "80%", marginLeft: "10%", marginRight: "10%" }}>
@@ -144,6 +173,13 @@ export default function Admin() {
             </DialogActions>
           </Box>
         </Dialog>
+        <Snackbar
+          open={duplicateUserMsg}
+          autoHideDuration={4000}
+          onClose={toggleDuplicateUserMsg}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          message={duplicateUserErrMsg.current}
+        />
         <Button onClick={renderEditDialog} disabled={buttonActive} sx={{ position: "fixed", left: "45%", marginTop: "6%" }} variant="contained">Edit</Button>
         <Snackbar
           open={deleteMsg}
@@ -167,7 +203,7 @@ export default function Admin() {
         <Snackbar
           open={createdMsg}
           autoHideDuration={4000}
-          onClose={()=> setCreatedMsg(createdMsg?false:true)}
+          onClose={() => setCreatedMsg(createdMsg ? false : true)}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           message={`User "${new_user.current.userName}" is added successfully`}
         />
